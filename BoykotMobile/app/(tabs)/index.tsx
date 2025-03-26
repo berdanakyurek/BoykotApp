@@ -64,6 +64,14 @@ export default function HomeScreen() {
           value={inputValue ? inputValue.toString() : ''}
           placeholder="Barkod Numarası Girin Veya Kamera İle Barkodu Okutun"
           keyboardType="numeric"
+          right={
+            <TextInput.Icon
+              icon="camera"
+              onPress={() => {
+
+              }}
+            />
+        }
       />
       <Button
           onPress={() => {
