@@ -5,6 +5,6 @@ class QueryBarcodeResponse {
 
   barcodeNumber?: string;
 
-  boykotTagIds: string[] = [];
+  tags: TagDTO[] = [];
 }
 export default QueryBarcodeResponse;

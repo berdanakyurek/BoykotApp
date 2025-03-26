@@ -3,6 +3,7 @@ using Boykot.DbContexts;
 using Boykot.Models.Request;
 using Boykot.Models.Response;
 using Boykot.Models.Db;
+using Boykot.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boykot.Services;
@@ -34,12 +35,12 @@ public class BoykotService : IBoykotService
         }
 
         response.CompanyName = company.Name;
-        response.BoykotTagIds = company.CompanyTags
-            .Select(ct => ct.TagId)
-            .Intersect(request.TagIds)
+        response.Tags = company.CompanyTags
+            .Where(ct => request.TagIds.Contains(ct.TagId))
+            .Select(ct => new TagDTO { Id = ct.Tag.Id, Name = ct.Tag.Name })
             .ToList();
 
-        if (response.BoykotTagIds.Count > 0)
+        if (response.Tags.Count() > 0)
             response.Boykot = true;
         else
             response.Boykot = false;

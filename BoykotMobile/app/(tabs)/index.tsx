@@ -2,7 +2,7 @@ import { Image, StyleSheet, Platform } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { TextInput, Button, Card, Avatar } from 'react-native-paper';
+import { TextInput, Button, Card, Avatar, MD3Colors, List } from 'react-native-paper';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLazyQueryBarcodeQuery } from '../../services/api';
@@ -23,7 +23,7 @@ export default function HomeScreen() {
   const [inputValue, setInputValue] = useState<number | null>(null);
   const [userTags, setUserTags] = useState<Array<string>>([]);
   const [response, setResponse] = useState<QueryBarcodeResponse | null>(null);
-
+  const [subtitle, setSubtitle] = useState<string>("");
   const [getBarcode, { isLoading }] = useLazyQueryBarcodeQuery();
 
   useEffect( () => {
@@ -35,6 +35,19 @@ export default function HomeScreen() {
     fetchUserTags();
   }, []);
 
+  useEffect( () => {
+    setSubtitle(generateSubtitle() || "");
+  }, [response]);
+
+  const generateSubtitle = () => {
+    if(!response)
+      return "";
+    let res = "Barkod No: " + response.barcodeNumber ;
+
+    if(response.companyName)
+      res += "\nFirma: " + response.companyName;
+    return res;
+  }
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -77,8 +90,19 @@ export default function HomeScreen() {
                                    color={response.boykot ? "red" : "green"}
                 />}
                 title={response.boykot ? "Boykot Ürünü!" : "Boykot Ürünü Değil"}
-                subtitle={"Barkod No: " + response.barcodeNumber}
+                subtitle={subtitle}
+                subtitleNumberOfLines={10}
           />
+          { response.boykot &&
+            <Card.Content style={{ padding: 16, gap: 10 }}>
+              <ThemedText type="subtitle">İlgili Boykotlar:</ThemedText>
+              <List.Section>
+                {response.tags.map((b, i) => {
+                  return <List.Item key={i} title={b.name} />
+                })}
+              </List.Section>
+            </Card.Content>
+          }
         </Card>
       }
       </ThemedView>
