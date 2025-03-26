@@ -7,6 +7,9 @@ import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useLazyQueryBarcodeQuery } from '../../services/api';
 import QueryBarcodeResponse from '../../models/QueryBarcodeResponse';
+import { useCameraPermissions } from "expo-camera";
+
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 const getUserTags = async () => {
   try {
@@ -25,6 +28,23 @@ export default function HomeScreen() {
   const [response, setResponse] = useState<QueryBarcodeResponse | null>(null);
   const [subtitle, setSubtitle] = useState<string>("");
   const [getBarcode, { isLoading }] = useLazyQueryBarcodeQuery();
+
+  const [ permission, requestPermission ] = useCameraPermissions();
+
+  const router = useRouter();
+
+  const { scanValue } = useLocalSearchParams();
+
+  useEffect(() => {
+    if (scanValue) {
+      const barcodeNumber = parseInt(scanValue as string);
+      if (!isNaN(barcodeNumber)) {
+        setInputValue(barcodeNumber);
+
+        router.replace('/');
+      }
+    }
+  }, [scanValue]);
 
   useEffect( () => {
     const fetchUserTags = async () => {
@@ -68,7 +88,10 @@ export default function HomeScreen() {
             <TextInput.Icon
               icon="camera"
               onPress={() => {
-
+                if(!permission?.granted)
+                  requestPermission();
+                else
+                  router.push('/scanner');
               }}
             />
         }

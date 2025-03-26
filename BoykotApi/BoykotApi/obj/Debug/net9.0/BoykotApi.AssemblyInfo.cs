@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BoykotApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0cd0d150481819f7f8c8d9a848166c6281d96e14")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1603eb081c2955fb42e58c8922e6503798197fce")]
 [assembly: System.Reflection.AssemblyProductAttribute("BoykotApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BoykotApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
