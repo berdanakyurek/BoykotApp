@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Boykot.Interfaces;
 using Boykot.Models.Request;
 using Boykot.Models.Response;
+using Boykot.Models.Db;
 
 namespace Boykot.Controllers
 {
@@ -22,6 +23,13 @@ namespace Boykot.Controllers
         public async Task<IActionResult> QueryBarcode(QueryBarcodeRequest request)
         {
             return Ok(await _boykotService.QueryBarcode(request));
+        }
+
+        [HttpGet("GetTags")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Tag>))]
+        public async Task<IActionResult> GetTags()
+        {
+            return Ok(await _boykotService.GetTags());
         }
     }
 }

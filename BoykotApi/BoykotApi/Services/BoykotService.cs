@@ -5,7 +5,6 @@ using Boykot.Models.Response;
 using Boykot.Models.Db;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Boykot.Services;
 
 public class BoykotService : IBoykotService
@@ -20,6 +19,7 @@ public class BoykotService : IBoykotService
     public async Task<QueryBarcodeResponse> QueryBarcode(QueryBarcodeRequest request)
     {
         QueryBarcodeResponse response = new QueryBarcodeResponse();
+        response.BarcodeNumber = request.Barcode;
 
         Company? company = await _context.Companies
         .Where(c => c.BarcodePrefixes.Any(bp => request.Barcode.ToString().StartsWith(bp.Prefix.ToString())))
@@ -45,6 +45,11 @@ public class BoykotService : IBoykotService
             response.Boykot = false;
 
         return response;
+    }
+
+    public async Task<List<Tag>> GetTags()
+    {
+        return await _context.Tags.ToListAsync();
     }
 
 }

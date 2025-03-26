@@ -35,8 +35,8 @@ builder.Services.AddDbContext<BoykotDbContext>(options => {
 builder.Services.AddScoped<IBoykotService, BoykotService>();
 
 var app = builder.Build();
+app.UseCors("AllowAllOrigins");
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -51,4 +51,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run("http://0.0.0.0:5162");
