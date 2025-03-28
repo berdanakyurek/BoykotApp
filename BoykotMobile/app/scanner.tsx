@@ -47,12 +47,10 @@ const isBarcodeInsideFrame = (cornerPoints, frameLeft, frameTop, frameWidth, fra
   const frameTop = (screenHeight - frameHeight) / 2;
 
   if (!isBarcodeInsideFrame(data.cornerPoints, frameLeft, frameTop, frameWidth, frameHeight)) {
-    console.log("Barkod çerçevede değil, yoksayıldı.");
     return;
   }
 
   setScanned(true);
-  console.log("Geçerli barkod:", data.data);
 
   router.back();
   router.push({

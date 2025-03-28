@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import QueryBarcodeRequest from '../models/QueryBarcodeRequest';
 import QueryBarcodeResponse from '../models/QueryBarcodeResponse';
 
-const prefix = "http://192.168.1.109:5162/api/Boykot/";
+const prefix = "http://13.60.40.160:5162/api/Boykot/";
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: prefix }),
